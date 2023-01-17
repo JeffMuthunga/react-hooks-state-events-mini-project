@@ -10,19 +10,7 @@ console.log({ CATEGORIES, TASKS });
 function App() {
   const [data, setData] = useState(TASKS)
   const [dataCategory, setDataCategory] = useState("All")
-  const [formData, setFormData]= useState({
-    text: "",
-    category: "Code"
-  })
-  function handleSubmit(e){
-    e.preventDefault()
-    setFormData({text: e.target.text.value,
-    category: ()=>{handleChange(e)}})
-    console.log(formData)
-  }
-  function handleChange(e){
-    return e.target.value
-  }
+
 
   function handleDelete(text){
     const filteredList = data.filter((obj) => obj.text !== text )
@@ -38,13 +26,17 @@ function App() {
     }
 
   }
+  const handleFormSubmit = (newTask)=> {
+    setData([...data, newTask])
+
+  }
  
   return (
     <div className="App">
       <h2>My tasks</h2>
       <CategoryFilter filterCategory={dataCategory} handleClick={handleClick} data={CATEGORIES}/>
-      <NewTaskForm data={CATEGORIES} handleSubmit={handleSubmit} handleChange={handleChange}/>
-      <TaskList data={data} handleDelete={handleDelete}/>
+      <NewTaskForm data={CATEGORIES} setAppData={handleFormSubmit}/>
+      <TaskList dataA={data} handleDelete={handleDelete}/>
     </div>
   );
 }
